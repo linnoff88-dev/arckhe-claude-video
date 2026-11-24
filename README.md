@@ -1,4 +1,4 @@
-﻿# /watch
+# /watch
 
 **Give Claude the ability to watch any video.**
 
@@ -267,4 +267,4 @@ Built by Brad Bonanno â€” I make content about building with AI on [YouTube
 
 ---
 
-Projeto adaptado da comunidade INEMA TDS - Marca Arckhe
+Projeto adaptado da comunidade ARCKHÉ TDS - Marca Arckhe
