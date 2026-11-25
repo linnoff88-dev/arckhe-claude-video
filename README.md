@@ -68,7 +68,7 @@ When the user names a moment ("around 2:30", "the last 30 seconds", "from 0:45 t
 
 Frame selection â€” keyframes (`efficient`), scene-change detection (`balanced`/`token-burner`), or the uniform sampler it falls back to â€” can still surface near-identical frames: a screen recording that holds one slide for 90 seconds produces a dozen, each billed as a separate image. A dedup pass drops them before frames reach Claude. It runs by default on every frame mode (`--no-dedup` turns it off):
 
-1. One `ffmpeg` call scales each extracted JPEG to a 16Ã—16 grayscale thumbnail. Everything after is pure-stdlib Python â€” no image libraries.
+1. One `ffmpeg` call scales each extracted JPEG to a 16ê—16 grayscale thumbnail. Everything after is pure-stdlib Python â€” no image libraries.
 2. For each frame, compute the **mean absolute difference** against the *last frame that was kept* (average per-pixel brightness change, 0â€“255 scale).
 3. If that difference is at or below the threshold (`2.0`), the frame is a near-duplicate and is dropped. Otherwise it's kept and becomes the new reference.
 4. The frame-budget cap applies *after* dedup, so the budget is spent on distinct frames.
@@ -79,7 +79,7 @@ The **Frames** line reports what was collapsed, e.g. `6 selected from 14 candida
 
 ## Detail modes â€” measured
 
-The `--detail` dial trades speed and token cost for visual fidelity. Numbers below are from a real run against a **49:08** YouTube video (1280Ã—720, English auto-captions) â€” a long, mostly-static screen recording, the case that stresses the caps hardest. Extraction times are local CPU against a pre-downloaded copy; the one-time download was **~37 s** / 76 MB, shared by the three frame modes.
+The `--detail` dial trades speed and token cost for visual fidelity. Numbers below are from a real run against a **49:08** YouTube video (1280ê—720, English auto-captions) â€” a long, mostly-static screen recording, the case that stresses the caps hardest. Extraction times are local CPU against a pre-downloaded copy; the one-time download was **~37 s** / 76 MB, shared by the three frame modes.
 
 | Mode | Engine | Frames | Cap | Extraction time | Temporal coverage | Est. image tokens |
 |------|--------|--------|-----|-----------------|-------------------|-------------------|
@@ -88,9 +88,9 @@ The `--detail` dial trades speed and token cost for visual fidelity. Numbers bel
 | `balanced` | scene-change | 100 | 100 | **~20.9 s** | 0:00 â†’ 48:38 (full) | **~19.7k** |
 | `token-burner` | scene-change | 116 | uncapped | **~21.0 s** | 0:00 â†’ 48:38 (full) | **~22.8k** |
 
-- **Image tokens** use Anthropic's `(width Ã— height) / 750` â€” at the default 512px width these 720p frames are 512Ã—288, **â‰ˆ197 tokens/frame**; `--resolution 1024` roughly 4Ã—s that. The transcript is surfaced in every captioned mode and on long videos is often the larger cost.
+- **Image tokens** use Anthropic's `(width ê— height) / 750` â€” at the default 512px width these 720p frames are 512ê—288, **â‰ˆ197 tokens/frame**; `--resolution 1024` roughly 4ê—s that. The transcript is surfaced in every captioned mode and on long videos is often the larger cost.
 - **One sampling rule across frame modes.** Each detects all candidates across the full range, then even-samples (first + last always kept) down to its cap. The modes differ only in candidate *source* (keyframes vs. scene cuts) and cap, never in how coverage is spread â€” so the last frame always lands at the end, not partway through.
-- **`efficient` is the speed tier** (~0.5 s) â€” it only reconstructs keyframes, so it's ~40Ã— faster than the scene modes, which decode every frame to find cuts. It can also return *more* frames than `balanced` on low-motion footage (keyframes outnumber scene cuts); "efficient" means fast extraction, not fewer frames.
+- **`efficient` is the speed tier** (~0.5 s) â€” it only reconstructs keyframes, so it's ~40ê— faster than the scene modes, which decode every frame to find cuts. It can also return *more* frames than `balanced` on low-motion footage (keyframes outnumber scene cuts); "efficient" means fast extraction, not fewer frames.
 - **`token-burner` only diverges from `balanced` past the cap.** This clip had 116 cuts, so `balanced` sampled 100 and `token-burner` kept all 116. On high-motion video with hundreds of cuts, `token-burner` keeps everything (and trips the >250-frame token warning) while `balanced` thins to 100.
 
 End-to-end from a cold URL, `transcript` is the cheapest mode by far; the frame modes add the shared ~37 s download on top of the extraction times above.
@@ -267,4 +267,4 @@ Built by Brad Bonanno â€” I make content about building with AI on [YouTube
 
 ---
 
-Projeto adaptado da comunidade ARCKHÉ TDS - Marca Arckhe
+Projeto adaptado da comunidade ARCKHÉ TDS - ARCKHÉe
